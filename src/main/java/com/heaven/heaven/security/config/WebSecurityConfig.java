@@ -58,9 +58,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
               .addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
 
-                //.authorizeRequests().antMatchers("/api/users/**").hasAnyAuthority();
-              // .sessionManagement().sessionCreationPolicy(STATELESS);
-
 
     }
 

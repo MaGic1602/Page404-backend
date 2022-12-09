@@ -31,21 +31,16 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if(request.getServletPath().equals("login")  ){
-            System.out.println("i was here");
             filterChain.doFilter(request,response);
-            System.out.println("i was herenjjj");
         }else{
-            System.out.println("i lived");
             String authorizationHeader = request.getHeader(AUTHORIZATION);
             if(authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")){
                 try {
-                    System.out.println("i loved");
                     String token=authorizationHeader.substring("Bearer ".length());
 
                     Algorithm algorithm=Algorithm.HMAC256("secret".getBytes());
 
                     JWTVerifier jwtVerifier= JWT.require(algorithm).build();
-                    System.out.println("nomnom");
                     DecodedJWT decodedJWT= jwtVerifier.verify(token);
 
                     String username =decodedJWT.getSubject();
