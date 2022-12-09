@@ -90,4 +90,6 @@ public class ApplicationUser implements UserDetails {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+
 }

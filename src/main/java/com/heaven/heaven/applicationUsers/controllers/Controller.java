@@ -5,6 +5,7 @@ import com.heaven.heaven.applicationUsers.payload.request.RegistrationRequest;
 import com.heaven.heaven.applicationUsers.repositories.ApplicationUserRepository;
 import com.heaven.heaven.applicationUsers.services.RegistrationService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class Controller {
     @CrossOrigin
     @GetMapping(path = "/users")
     public List<ApplicationUser> getUsers(){
+
         return applicationUserRepository.findAll();
     }
 
