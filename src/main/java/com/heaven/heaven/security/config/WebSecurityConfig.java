@@ -6,7 +6,6 @@ import com.heaven.heaven.filter.AuthorizationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Role;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -34,11 +33,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
 
         http.csrf().disable();
+
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeRequests()
                        .antMatchers("/api/register/**").permitAll()
                         .antMatchers("/login/**").permitAll()
-
+                        .antMatchers("/api/updatePassword/**").authenticated()
                 .antMatchers("/api/users/**").authenticated()
                         .anyRequest().authenticated();
 
@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(
                         (request, response, ex) -> {
                             response.sendError(
-                                    HttpServletResponse.SC_UNAUTHORIZED,
+                                    HttpServletResponse.SC_BAD_REQUEST,
                                     ex.getMessage()
                             );
                         }
@@ -70,6 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     DaoAuthenticationProvider provider=new DaoAuthenticationProvider();
     provider.setPasswordEncoder(bCryptPasswordEncoder);
     provider.setUserDetailsService(applicationUserService);
+
     return provider;
     }
 
